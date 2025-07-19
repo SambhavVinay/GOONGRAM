@@ -37,7 +37,7 @@ def login():
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, user_name, client_message)
-            return render_template("Dashboard.html")
+            return render_template("dashboard.html")
         else:
             return "Invalid Credentials (or) Gooner Not Registered !!!"
 
@@ -77,7 +77,7 @@ def delete(user_id):
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("Dashboard.html")
+    return render_template("dashboard.html")
 
 @app.route("/database")
 def database():
