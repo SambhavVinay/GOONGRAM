@@ -24,28 +24,45 @@ def login():
       
       gooner = Gooners.query.filter_by(user_name = user_name, user_password = user_password).first()
       if gooner:
-         return redirect("/dashboard")
+         return render_template("Dashboard.html")
       else:
          return "Invalid Credentials (or) Gooner Not Registered !!!"
       
    return render_template("login.html")
   
-@app.route("/register",methods=["POST","GET"])
+@app.route("/register", methods=["POST", "GET"])
 def register():
-   if request.method == "POST":
-      user_name = request.form["user_name"]
-      user_password = request.form["user_password"]
-      
-      new_gooner = Gooners(user_password = user_password, user_name = user_name)
-      db.session.add(new_gooner)
-      db.session.commit()
+    if request.method == "POST":
+        user_name = request.form["user_name"]
+        user_password = request.form["user_password"]
 
-   return render_template("register.html")   
+        if user_name and user_password:
+            new_gooner = Gooners(user_password=user_password, user_name=user_name)
+            db.session.add(new_gooner)
+            db.session.commit()
+            return redirect("/login")  
+
+    return render_template("register.html")  
+
+@app.route("/delete/<int:user_id>")
+def delete(user_id):
+   delete_gooner = Gooners.query.get_or_404(user_id)
+   try:
+      db.session.delete(delete_gooner)
+      db.session.commit()
+   except:
+      return f"Failed to Delete Gooner id {user_id}"
+   return redirect("/database")
+
 
 @app.route("/dashboard")
 def dashboard():
+   return render_template("Dashboard.html")
+
+@app.route("/database")
+def database():
    new_gooner = Gooners.query.group_by(Gooners.dateadded).all()
-   return render_template("dashboard.html",new_gooner = new_gooner)
+   return render_template("Database.html",new_gooner = new_gooner)
 
 if __name__ == "__main__":
     with app.app_context():

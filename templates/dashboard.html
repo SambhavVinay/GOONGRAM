@@ -3,13 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Goongram Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fafafa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: #8e8e8e;
+            margin-bottom: 60px;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0095f6;
+            color: white;
+            padding: 05px 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #007cd1;
+        }
+    </style>
 </head>
 <body>
-    {% for gooner in new_gooner %}
-    <h2>{{gooner.user_id}}</h2>
-     <h2>{{gooner.user_name}}</h2>
-     <h2>{{gooner.user_password}}</h2>
-    {% endfor %}
+    <h1>Goongram</h1>
+    <div class="tagline">Welcome to your dashboard</div>
+
+    <a href="/database" class="floating-btn">Database</a>
 </body>
 </html>
