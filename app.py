@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import smtplib
 from dotenv import load_dotenv
 import os
-
+from flask import jsonify
 
 load_dotenv(dotenv_path=r'C:\Users\Admin\OneDrive\Desktop\py\SQLAlchemyDatabase\Goongram\pass.env')
 
@@ -121,6 +121,13 @@ def search():
        search_name = Gooners.query.filter(Gooners.name.ilike(f"%{name}%")).all()
        return render_template("search_results.html",search_name = search_name,query=name)
     return render_template("search.html")
+
+@app.route("/suggest") #VIBECODED   
+def suggest():
+    query = request.args.get("query", "")
+    results = Gooners.query.filter(Gooners.name.ilike(f"{query}%")).limit(5).all()
+    suggestions = [{"name": u.name, "user_name": u.user_name} for u in results]
+    return jsonify(suggestions)
 
 @app.route("/profile/<int:user_id>")
 def profile_open(user_id):

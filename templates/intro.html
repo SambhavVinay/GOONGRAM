@@ -1,121 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome • Gooners</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Welcome • Gooners</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            background-color: #fafafa;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
+    body {
+      background: linear-gradient(to bottom right, #fff, #f0f4ff);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-        .title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #262626;
-            margin-bottom: 30px;
-        }
+    .title {
+      font-size: 3rem;
+      font-weight: 600;
+      color: #262626;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
+    }
 
-        .btn {
-            background-color: #0095f6;
-            color: white;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            width: 100%;
-            max-width: 280px;
-            transition: background-color 0.3s ease;
-        }
+    .btn {
+      background: #0095f6;
+      color: white;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 18px;
+      width: 100%;
+      max-width: 280px;
+      transition: opacity 0.3s ease;
+    }
 
-        .btn:hover {
-            background-color: #0077cc;
-        }
+    .btn:hover {
+      opacity: 0.85;
+    }
 
-        .login-link {
-            color: #0095f6;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
+    .login-link {
+      color: #0095f6;
+      font-size: 0.95rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-        .login-link:hover {
-            text-decoration: underline;
-        }
+    .login-link:hover {
+      text-decoration: underline;
+    }
 
-        .database-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #0095f6;
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
+    .database-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4f5bd5;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
 
-        .database-btn:hover {
-            background-color: #0077cc;
-        }
+    .database-btn:hover {
+      background-color: #3c46b2;
+    }
 
-        @media (max-width: 600px) {
-            .title {
-                font-size: 2rem;
-            }
+    .footer-note {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      font-size: 12px;
+      color: #888;
+      opacity: 0.7;
+      font-weight: 400;
+    }
 
-            .btn {
-                padding: 12px 20px;
-                font-size: 0.95rem;
-            }
+    @media (max-width: 600px) {
+      .title {
+        font-size: 2.3rem;
+      }
 
-            .database-btn {
-                bottom: 15px;
-                right: 15px;
-                padding: 8px 14px;
-                font-size: 0.9rem;
-            }
-            
-        }
-        .footer-note {
-            position: fixed;
-            bottom: 12px;
-            right: 12px;
-            font-size: 12px;
-            color: #888;
-            opacity: 0.7;
-        }
-    </style>
+      .btn {
+        padding: 12px 22px;
+        font-size: 0.95rem;
+      }
+
+      .database-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="title">Gooners</div>
+  <div class="title">Gooners</div>
 
-    <a href="/register"><button class="btn">Create Gooners Account</button></a>
-    <a href="/login" class="login-link">Log in</a>
+  <a href="/register"><button class="btn">Create Gooners Account</button></a>
+  <a href="/login" class="login-link">Already have an account? Log in</a>
 
-<div class="footer-note">© Goongram 2025</div>
+  <div class="footer-note">© Goongram 2025</div>
+
 </body>
 </html>
