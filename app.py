@@ -1,9 +1,10 @@
-from flask import Flask, redirect, request, render_template
+from flask import Flask, redirect, request, render_template,session
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import smtplib
 from dotenv import load_dotenv
 import os
+
 
 load_dotenv(dotenv_path=r'C:\Users\Admin\OneDrive\Desktop\py\SQLAlchemyDatabase\Goongram\pass.env')
 
@@ -13,6 +14,7 @@ EMAIL_PASS = os.getenv("EMAIL_PASS")
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db = SQLAlchemy(app)
+app.secret_key = "NiggaBalls"
 
 class Gooners(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -22,32 +24,41 @@ class Gooners(db.Model):
     name = db.Column(db.String(100))
     DOB = db.Column(db.String(100))
 
-@app.route("/name",methods = ["POST","GET"])
+@app.route("/profile", methods=["POST", "GET"])
+def profile():
+    if "user_id" not in session:
+        return redirect("/login")
+    user = Gooners.query.get(session["user_id"])
+    return render_template("profile.html", user=user)
+
+
+@app.route("/name", methods=["POST", "GET"])
 def name():
     if request.method == "POST":
         name = request.form["name"]
-        new_user = Gooners.query.order_by(Gooners.user_id.desc()).first()
-        if new_user:
-         new_name = Gooners(name = name)
-         Gooners.name = name
-         return redirect("/DOB")
+        user = Gooners.query.get(session["user_id"])
+        if user:
+            user.name = name  
+            db.session.commit()
+            return redirect("/DOB")
         else:
-            return "Error adding Gooner"
+            return "Error adding name"
     return render_template("name.html")
 
-@app.route("/DOB",methods = ["POST","GET"])
+
+@app.route("/DOB", methods=["POST", "GET"])
 def DOB():
     if request.method == "POST":
-        DOB = request.form["DOB"]
-        new_user = Gooners.query.order_by(Gooners.user_id.desc()).first()
-        if new_user: 
-         new_DOB = Gooners(DOB = DOB)
-         Gooners.DOB = DOB
-         db.session.commit()
-         return redirect("/dashboard")
+        dob = request.form["DOB"]
+        user = Gooners.query.get(session["user_id"])
+        if user:
+            user.DOB = dob  
+            db.session.commit()
+            return redirect("/dashboard")
         else:
-            return"Failed to add DOB"
+            return "Failed to add DOB"
     return render_template("DOB.html")
+
 
 @app.route("/intro")
 def intro():
@@ -65,6 +76,7 @@ def login():
 
         gooner = Gooners.query.filter_by(user_name=user_name, user_password=user_password).first()
         if gooner:
+            session["user_id"] = gooner.user_id
             client_message = f"Congrats {user_name}, Successful LOGIN onto GoonGram!"
             server = smtplib.SMTP("smtp.gmail.com", 587)
             server.starttls()
@@ -73,6 +85,7 @@ def login():
             return redirect("/name")
         else:
             return "Invalid Credentials (or) Gooner Not Registered !!!"
+    
 
     return render_template("login.html")
 

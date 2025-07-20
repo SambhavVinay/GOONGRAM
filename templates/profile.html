@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ user.name }} • Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .gooner-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-family: 'Poppins', sans-serif;
+      color: #6d6f71;
+    }
+
+    .profile-container {
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .top-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #e3e3e3;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+      margin-left: 30px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .bio {
+      margin-top: 10px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .bio p {
+        font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .bio a {
+        font-family: 'Roboto', sans-serif;
+      color: #3897f0;
+      text-decoration: none;
+    }
+
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .buttons button {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .buttons button:first-child {
+      background-color: #0095f6;
+      color: white;
+      border: none;
+    }
+
+    .highlights {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      overflow-x: auto;
+      border: none;
+    }
+
+    .highlight {
+      text-align: center;
+    }
+
+    .highlight svg {
+      width: 60px;
+      height: 60px;
+      stroke: #000;
+      stroke-width: 0.2;
+      fill: none;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    .posts-grid .post {
+      background-color: #e6e6e6;
+      aspect-ratio: 1 / 1;
+    }
+
+    .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0095f6;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #007cd1;
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    @media screen and (max-width: 600px) {
+      .top-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stats {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 10px;
+      }
+      .floating-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                border-radius: 10px;
+            }
+    }
+    .profile-container {
+  animation: fadeIn 0.6s ease-out both;
+}
+    
+
+  </style>
+</head>
+<body>
+
+  <div class="gooner-title">Gooner</div>
+
+  <div class="profile-container">
+    <div class="top-section">
+      <div class="profile-pic"></div>
+      <div class="stats">
+        <div class="stat"><strong>_</strong>Posts</div>
+        <div class="stat"><strong>_</strong>Followers</div>
+        <div class="stat"><strong>_</strong>Following</div>
+      </div>
+    </div>
+
+    <div class="bio">
+      <strong>{{ user.name }}</strong>
+      <p>DOB: {{ user.DOB }}<br>
+      Joined: {{ user.dateadded }}<br>
+    </div>
+
+    <div class="buttons">
+      <button>Follow</button>
+      <button>Message</button>
+    </div>
+
+    <div class="highlights">
+      {% for i in range(2) %}
+      <div class="highlight">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <text x="12" y="16" font-size="10" text-anchor="middle" fill="#000"></text>
+        </svg>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="posts-grid">
+      {% for i in range(9) %}
+      <div class="post"></div>
+      {% endfor %}
+    </div>
+
+  </div>
+  <a href="/dashboard" class="floating-btn">Home</a>
+</body>
+</html>
