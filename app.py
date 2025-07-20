@@ -73,7 +73,7 @@ def login():
     if request.method == "POST":
         user_name = request.form["user_name"]
         user_password = request.form["user_password"]
-
+        
         gooner = Gooners.query.filter_by(user_name=user_name, user_password=user_password).first()
         if gooner:
             session["user_id"] = gooner.user_id
@@ -82,7 +82,10 @@ def login():
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, user_name, client_message)
-            return redirect("/name")
+            if gooner.name and gooner.DOB:
+                return redirect("/dashboard")
+            else:
+                return redirect("/name")
         else:
             return "Invalid Credentials (or) Gooner Not Registered !!!"
     
