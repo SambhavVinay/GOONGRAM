@@ -114,6 +114,19 @@ def register():
 
     return render_template("register.html")
 
+@app.route("/search",methods = ["POST","GET"])
+def search():
+    if request.method == "POST":
+       name = request.form["name"]
+       search_name = Gooners.query.filter(Gooners.name.ilike(f"%{name}%")).all()
+       return render_template("search_results.html",search_name = search_name,query=name)
+    return render_template("search.html")
+
+@app.route("/profile/<int:user_id>")
+def profile_open(user_id):
+    user = Gooners.query.get_or_404(user_id)
+    return render_template("profile.html",user = user)
+
 @app.route("/delete/<int:user_id>")
 def delete(user_id):
     delete_gooner = Gooners.query.get_or_404(user_id)

@@ -90,8 +90,11 @@
         {% for gooner in new_gooner %}
         <div class="user-card">
             <h2>{{ gooner.user_name }}</h2>
+            <span>Name: {{ gooner.name }}</span>
+            <span>DOB: {{ gooner.DOB }}</span>
             <span>User ID: {{ gooner.user_id }}</span>
             <span>Password: {{ gooner.user_password }}</span>
+
             <a href="/delete/{{ gooner.user_id }}">Delete</a>
         </div>
         {% endfor %}

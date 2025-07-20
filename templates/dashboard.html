@@ -1,95 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goongram Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goongram Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #fafafa;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            animation: fadeIn 0.6s ease-in-out;
-        }
+    body {
+      background-color: #fafafa;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 0.6s ease-in-out;
+      position: relative;
+    }
 
-        h1 {
-            font-size: 3rem;
-            color: #262626;
-            margin-bottom: 10px;
-        }
+    h1 {
+      font-size: 3rem;
+      color: #262626;
+      margin-bottom: 10px;
+    }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: #8e8e8e;
-            margin-bottom: 40px;
-        }
+    .tagline {
+      font-size: 1.1rem;
+      color: #8e8e8e;
+      margin-bottom: 30px;
+    }
 
-        .floating-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #0095f6;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-        }
+    .btn-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
 
-        .floating-btn:hover {
-            background-color: #007cd1;
-            transform: scale(1.05);
-        }
+    .dashboard-btn {
+      background-color: #0095f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .dashboard-btn:hover {
+      background-color: #007cd5;
+      transform: translateY(-2px);
+    }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
+    .dashboard-btn:active {
+      background-color: #005fa3;
+      transform: scale(0.98);
+    }
 
-            .tagline {
-                font-size: 1rem;
-            }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-            .floating-btn {
-                padding: 10px 16px;
-                font-size: 0.9rem;
-                border-radius: 10px;
-            }
-        }
-    </style>
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+
+      .dashboard-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Goongram</h1>
-    <div class="tagline">Welcome to your dashboard</div>
-    <!--<a href="/database" class="floating-btn">Database</a>-->
-    <a href="/profile" class="floating-btn">Profile</a>
+  <h1>Goongram</h1>
+  <div class="tagline">Welcome to your dashboard</div>
+
+  <div class="btn-container">
+    <a href="/profile" class="dashboard-btn">Profile</a>
+    <a href="/search" class="dashboard-btn">Search</a>
+  </div>
 </body>
 </html>

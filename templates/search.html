@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search • Gooners</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .search-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .search-container h1 {
+      font-weight: 600;
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .search-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0095f6;
+      color: white;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .search-container button:hover {
+      background-color: #007dd1;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      color: #262626;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <h1>Search for a Gooner</h1>
+    <form method="POST">
+      <input type="text" name="name" placeholder="Enter name to search" required>
+      <button type="submit">Search</button>
+    </form>
+    <a class="back-link" href="/dashboard"> Back to Dashboard</a>
+  </div>
+</body>
+</html>
