@@ -19,10 +19,43 @@ class Gooners(db.Model):
     user_name = db.Column(db.String(100), nullable=False)
     user_password = db.Column(db.String(100), nullable=False)
     dateadded = db.Column(db.DateTime, default=datetime.utcnow)
+    name = db.Column(db.String(100))
+    DOB = db.Column(db.String(100))
+
+@app.route("/name",methods = ["POST","GET"])
+def name():
+    if request.method == "POST":
+        name = request.form["name"]
+        new_user = Gooners.query.order_by(Gooners.user_id.desc()).first()
+        if new_user:
+         new_name = Gooners(name = name)
+         Gooners.name = name
+         return redirect("/DOB")
+        else:
+            return "Error adding Gooner"
+    return render_template("name.html")
+
+@app.route("/DOB",methods = ["POST","GET"])
+def DOB():
+    if request.method == "POST":
+        DOB = request.form["DOB"]
+        new_user = Gooners.query.order_by(Gooners.user_id.desc()).first()
+        if new_user: 
+         new_DOB = Gooners(DOB = DOB)
+         Gooners.DOB = DOB
+         db.session.commit()
+         return redirect("/dashboard")
+        else:
+            return"Failed to add DOB"
+    return render_template("DOB.html")
+
+@app.route("/intro")
+def intro():
+    return render_template("intro.html")
 
 @app.route("/")
 def home():
-    return render_template("login.html")
+    return redirect("/intro")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -37,7 +70,7 @@ def login():
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, user_name, client_message)
-            return render_template("dashboard.html")
+            return redirect("/name")
         else:
             return "Invalid Credentials (or) Gooner Not Registered !!!"
 
@@ -81,7 +114,6 @@ def dashboard():
 
 @app.route("/database")
 def database():
-    # CHANGED: Removed GROUP BY to avoid PostgreSQL error
     new_gooner = Gooners.query.order_by(Gooners.dateadded.desc()).all()
     return render_template("Database.html", new_gooner=new_gooner)
 

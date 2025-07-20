@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome • Gooners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #262626;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: #0095f6;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 280px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0077cc;
+        }
+
+        .login-link {
+            color: #0095f6;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .database-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0095f6;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .database-btn:hover {
+            background-color: #0077cc;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+
+            .database-btn {
+                bottom: 15px;
+                right: 15px;
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Gooners</div>
+
+    <a href="/register"><button class="btn">Create Gooners Account</button></a>
+    <a href="/login" class="login-link">Log in</a>
+
+    <a href="/database" class="database-btn">Database</a>
+
+</body>
+</html>
