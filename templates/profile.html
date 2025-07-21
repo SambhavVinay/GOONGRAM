@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{{ user.name }} • Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>sambhav.vinay • Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
     * {
@@ -18,86 +18,71 @@
       color: #000;
     }
 
-    .gooner-title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      font-family: 'Poppins', sans-serif;
-      color: #6d6f71;
-    }
-
     .profile-container {
-      padding: 20px;
-      max-width: 700px;
+      max-width: 600px;
       margin: auto;
+      padding: 16px;
     }
 
-    .top-section {
+    .top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding-bottom: 12px;
+    }
+
+   
+
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 0;
     }
 
     .profile-pic {
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      background-color: #e3e3e3;
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
+      background-color: #ddd;
     }
 
     .stats {
       display: flex;
-      justify-content: space-between;
-      flex: 1;
-      margin-left: 30px;
+      gap: 20px;
     }
 
     .stat {
       text-align: center;
     }
 
-    .stat strong {
-      display: block;
-      font-size: 18px;
+    .name {
+      font-weight: 500;
+      font-size: 1rem;
     }
 
-    .bio {
-      margin-top: 10px;
-    }
-
-    .bio p {
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .bio a {
-      color: #3897f0;
-      text-decoration: none;
+    .tagline, .handle {
+      font-size: 0.9rem;
+      color: #555;
     }
 
     .buttons {
-      margin-top: 10px;
       display: flex;
       gap: 10px;
+      margin-top: 12px;
     }
 
     .buttons button {
       flex: 1;
       padding: 8px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 5px;
       cursor: pointer;
-    }
-
-    .buttons button:first-child {
-      background-color: #0095f6;
-      color: white;
-      border: none;
+      font-weight: 500;
+      background-color: #f9f9f9;
     }
 
     .highlights {
@@ -105,163 +90,124 @@
       gap: 10px;
       margin: 20px 0;
       overflow-x: auto;
-      border: none;
     }
 
     .highlight {
-      text-align: center;
-    }
-
-    .highlight svg {
       width: 60px;
       height: 60px;
-      stroke: #000;
-      stroke-width: 0.2;
-      fill: none;
+      border-radius: 50%;
+      background-color: #eee;
+      flex-shrink: 0;
     }
 
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding: 8px 0;
+      margin-bottom: 20px;
     }
 
-    .posts-grid .post {
-      background-color: #e6e6e6;
-      aspect-ratio: 1 / 1;
+    .tab {
+      text-align: center;
+      flex: 1;
+      color: #333;
     }
 
-    .floating-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #0095f6;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 12px;
+    .tab.active {
       font-weight: bold;
+      border-bottom: 2px solid #000;
+    }
+
+    .no-posts {
+      text-align: center;
+      color: #999;
+      margin-top: 40px;
+    }
+
+    .no-posts img {
+      width: 60px;
+      opacity: 0.3;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .bottom-nav a {
+      color: #444;
+      font-size: 22px;
       text-decoration: none;
-      font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
     }
+    .username-clean {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #000000; /* professional cool blue */
+  letter-spacing: 0.5px;
+}
 
-    .floating-btn:hover {
-      background-color: #007cd1;
-      transform: scale(1.05);
-    }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    @media screen and (max-width: 600px) {
-      .top-section {
-        flex-direction: column;
-        align-items: flex-start;
-      }
 
-      .stats {
-        margin-left: 0;
-        width: 100%;
-        justify-content: space-around;
-        margin-top: 10px;
-      }
 
-      .floating-btn {
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        border-radius: 10px;
-      }
-    }
-
-    .profile-container {
-      animation: fadeIn 0.6s ease-out both;
-    }
-
-    #imageInput {
-      display: none;
-    }
   </style>
 </head>
 <body>
 
-  <div class="gooner-title">Gooner</div>
+<div class="profile-container">
+  <div class="top">
+<div class="user-info username-clean">{{ user.name }}</div>
 
-  <div class="profile-container">
-    <div class="top-section">
-      <div class="profile-pic" id="profilePic" onclick="document.getElementById('imageInput').click()"></div>
-      <input type="file" id="imageInput" accept="image/*" onchange="saveProfileImage(event)">
-      <div class="stats">
-        <div class="stat"><strong>_</strong>Posts</div>
-        <div class="stat"><strong>_</strong>Followers</div>
-        <div class="stat"><strong>_</strong>Following</div>
-      </div>
-    </div>
 
-    <div class="bio">
-      <strong>{{ user.name }}</strong>
-      <p>DOB: {{ user.DOB }}<br>
-        Joined: {{ user.dateadded }}<br>
-      </p>
-    </div>
+    <div><button style="border: none; background: none; font-size: 20px;">+</button></div>
+  </div>
 
-    <div class="buttons">
-      <button>Follow</button>
-      <button>Message</button>
-    </div>
-
-    <div class="highlights">
-      {% for i in range(2) %}
-      <div class="highlight">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" />
-          <text x="12" y="16" font-size="10" text-anchor="middle" fill="#000"></text>
-        </svg>
-      </div>
-      {% endfor %}
-    </div>
-
-    <div class="posts-grid">
-      {% for i in range(9) %}
-      <div class="post"></div>
-      {% endfor %}
+  <div class="profile-header">
+    <div class="profile-pic"></div>
+    <div class="stats">
+      <div class="stat"><strong>_</strong><br>Posts</div>
+      <div class="stat"><strong>_</strong><br>Followers</div>
+      <div class="stat"><strong>_</strong><br>Following</div>
     </div>
   </div>
 
-  <a href="/dashboard" class="floating-btn">Home</a>
-  <a href="/database">Database</a>
+  <div class="name">@{{ user.name }}</div>
+  
+  <div class="handle">{{ user.user_name }}</div>
 
-  <script>
-    // Load saved image on page load
-    window.onload = function () {
-      const savedImage = localStorage.getItem('profileImage');
-      if (savedImage) {
-        document.getElementById('profilePic').style.backgroundImage = `url(${savedImage})`;
-      }
-    };
+  <div class="buttons">
+    <button>Edit profile</button>
+    <button>Share profile</button>
+  </div>
 
-    function saveProfileImage(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
+  <div class="highlights">
+    <div class="highlight"></div>
+    <div class="highlight"></div>
+    <div class="highlight"></div>
+  </div>
 
-      reader.onload = function () {
-        const imageData = reader.result;
-        document.getElementById('profilePic').style.backgroundImage = `url(${imageData})`;
-        localStorage.setItem('profileImage', imageData);
-      };
+  <div class="tabs">
+    <div class="tab active">P</div>
+    <div class="tab">R</div>
+    <div class="tab">T</div>
+  </div>
 
-      reader.readAsDataURL(file);
-    }
-  </script>
+  <div class="no-posts">
+    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="No Posts"/>
+    <p>No posts yet</p>
+  </div>
+</div>
+
+
 
 </body>
 </html>
