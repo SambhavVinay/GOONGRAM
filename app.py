@@ -54,7 +54,7 @@ def DOB():
         if user:
             user.DOB = dob  
             db.session.commit()
-            return redirect("/dashboard")
+            return redirect("/gooners")
         else:
             return "Failed to add DOB"
     return render_template("DOB.html")
@@ -83,7 +83,7 @@ def login():
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, user_name, client_message)
             if gooner.name and gooner.DOB:
-                return redirect("/dashboard")
+                return redirect("/gooners")
             else:
                 return redirect("/name")
         else:
@@ -148,6 +148,12 @@ def delete(user_id):
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/gooners")
+def gooners():
+    present = Gooners.query.order_by(Gooners.dateadded.desc()).all()
+    return render_template("present.html", present = present)
+
+ 
 @app.route("/database")
 def database():
     new_gooner = Gooners.query.order_by(Gooners.dateadded.desc()).all()
