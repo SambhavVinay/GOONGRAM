@@ -137,7 +137,9 @@
     <div class="results-container">
         {% for user in search_name %}
             <div class="profile-card">
-                <div class="profile-pic"></div>
+                <div class="profile-pic">
+                    
+                </div>
                 <div class="name">{{ user.name }}</div>
                 <div class="username">@{{ user.user_name }}</div>
                 <a href="/profile/{{ user.user_id }}" class="view-btn">View Profile</a>
@@ -151,6 +153,6 @@
         <a href="/search"> Search Again</a> | 
         <a href="/dashboard"> Dashboard</a>
     </div>
-
+     
 </body>
 </html>

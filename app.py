@@ -6,13 +6,18 @@ from dotenv import load_dotenv
 import os
 from flask import jsonify
 
+
+
 load_dotenv(dotenv_path=r'C:\Users\Admin\OneDrive\Desktop\py\SQLAlchemyDatabase\Goongram\pass.env')
 
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'static/dp'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 db = SQLAlchemy(app)
 app.secret_key = "NiggaBalls"
 
@@ -23,13 +28,34 @@ class Gooners(db.Model):
     dateadded = db.Column(db.DateTime, default=datetime.utcnow)
     name = db.Column(db.String(100))
     DOB = db.Column(db.String(100))
+    dp = db.Column(db.String(200))
+
+
+@app.route("/dp",methods = ["POST","GET"])
+def dp():
+    image_url = None
+    user_name = session.get("user_name")
+    if request.method == "POST":
+        file = request.files["img"]
+        if file:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filepath)
+            image_url = "/" + filepath.replace("\\", "/")
+            gooner = Gooners.query.filter_by(user_name = user_name).first()
+            gooner.dp = image_url
+            session["image_url"] = image_url
+            db.session.commit()
+            return redirect("/profile")
+    return render_template("dp.html")
+
 
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
+    image_url = session.get("image_url")
     if "user_id" not in session:
         return redirect("/login")
     user = Gooners.query.get(session["user_id"])
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", user=user,image_url = image_url)
 
 
 @app.route("/name", methods=["POST", "GET"])
@@ -73,7 +99,7 @@ def login():
     if request.method == "POST":
         user_name = request.form["user_name"]
         user_password = request.form["user_password"]
-        
+        session["user_name"] = user_name
         gooner = Gooners.query.filter_by(user_name=user_name, user_password=user_password).first()
         if gooner:
             session["user_id"] = gooner.user_id
@@ -162,4 +188,4 @@ def database():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    #app.run(debug=True)
+    app.run(debug=True)
