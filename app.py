@@ -20,7 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 db = SQLAlchemy(app)
-app.secret_key = "NiggaBalls"
+app.secret_key = os.getenv("SECRET_KEY", "fallback-secret")
 
 class Gooners(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
