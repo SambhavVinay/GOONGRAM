@@ -215,7 +215,7 @@ def suggest():
 @app.route("/profile/<int:user_id>")
 def profile_open(user_id):
     user = Gooners.query.get_or_404(user_id)
-    return redirect("/profile")
+    return render_template("profile.html",user = user)
 
 @app.route("/delete/<int:user_id>")
 def delete(user_id):
