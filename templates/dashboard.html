@@ -1,110 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Goongram Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
       background-color: #fafafa;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      animation: fadeIn 0.6s ease-in-out;
-      position: relative;
     }
 
-    h1 {
-      font-size: 3rem;
-      color: #262626;
-      margin-bottom: 10px;
-    }
-
-    .tagline {
-      font-size: 1.1rem;
-      color: #8e8e8e;
-      margin-bottom: 30px;
-    }
-
-    .btn-container {
+    .navbar {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      top: 0;
+      width: 100%;
+      background-color: white;
+      padding: 15px 20px;
       display: flex;
-      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       z-index: 1000;
     }
 
-    .dashboard-btn {
-      background-color: #0095f6;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 20px;
+    .navbar h1 {
+      font-size: 1.6rem;
+      color: #262626;
+    }
+
+    .navbar a {
+      margin-left: 10px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      color: #0095f6;
+    }
+
+    .story-bar {
+      margin-top: 70px;
+      padding: 10px 15px;
+      display: flex;
+      overflow-x: auto;
+      border-bottom: 1px solid #dbdbdb;
+    }
+
+    .story {
+      flex: 0 0 auto;
+      margin-right: 15px;
+      text-align: center;
+    }
+
+    .story img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #c13584;
+      object-fit: cover;
+    }
+
+    .story span {
+      font-size: 0.75rem;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .feed {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+
+    .post {
+      background-color: white;
+      border: 1px solid #dbdbdb;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+    }
+
+    .post-header img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .post-header .username {
+      font-weight: 600;
+    }
+
+    .post img.post-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 15px;
+      padding: 10px 15px;
+      font-size: 1.2rem;
+    }
+
+    .post-caption {
+      padding: 0 15px 15px;
       font-size: 0.95rem;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    .dashboard-btn:hover {
-      background-color: #007cd5;
-      transform: translateY(-2px);
-    }
-
-    .dashboard-btn:active {
-      background-color: #005fa3;
-      transform: scale(0.98);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .tagline {
+      text-align: center;
+      color: #888;
+      margin-bottom: 50px;
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
+      .post-header img {
+        width: 30px;
+        height: 30px;
       }
 
-      .tagline {
-        font-size: 1rem;
-      }
-
-      .dashboard-btn {
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        border-radius: 6px;
+      .story img {
+        width: 50px;
+        height: 50px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Goongram</h1>
+
+  <div class="navbar">
+    <h1>Goongram</h1>
+    <div>
+      <a href="/profile">Profile</a>
+      <a href="/search">Search</a>
+    </div>
+  </div>
+
+  <!-- Story Bar -->
+  <div class="story-bar">
+    {% for story in stories %}
+    <div class="story">
+      <img src="{{ story.dp }}" alt="{{ story.name }}">
+      <span>{{ story.name }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Feed -->
+  <div class="feed">
+    {% for x in posts %}
+    {% if x.post1 %}
+    <div class="post">
+      <div class="post-header">
+        <img src="{{ x.dp }}" alt="Profile Picture">
+        <div class="username">{{ x.name }}</div>
+      </div>
+      <img src="{{ x.post1 }}" class="post-image" alt="Post">
+      <div class="post-actions">
+        ❤️ 💬 📤
+      </div>
+      <div class="post-caption">
+        <strong>{{ x.name }}</strong> {{ x.caption }}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
   <div class="tagline">Welcome to your dashboard</div>
 
-  <div class="btn-container">
-    <a href="/profile" class="dashboard-btn">Profile</a>
-    <a href="/search" class="dashboard-btn">Search</a>
-  </div>
 </body>
 </html>
