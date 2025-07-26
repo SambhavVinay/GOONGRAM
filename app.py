@@ -198,7 +198,7 @@ def delete(user_id):
 @app.route("/dashboard")
 def dashboard():
     user_name = session.get("user_name")
-    posts = Gooners.query.order_by(Gooners.dateadded.asc()).all()
+    posts = Gooners.query.order_by(Gooners.dateadded.desc()).all()
     user = Gooners.query.filter_by(user_name = user_name).first()
     return render_template("dashboard.html", posts = posts, user = user)
 
