@@ -7,6 +7,7 @@ import os
 from flask import jsonify
 import cloudinary
 import cloudinary.uploader
+from flask_migrate import Migrate
 
 load_dotenv()
 
@@ -28,6 +29,7 @@ app.config['UPLOAD_FOLDER_POST'] = UPLOAD_FOLDER_POST
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(UPLOAD_FOLDER_POST, exist_ok=True)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 app.secret_key = os.getenv("SECRET_KEY", "fallback-secret")
 
 class Gooners(db.Model):
@@ -38,34 +40,44 @@ class Gooners(db.Model):
     name = db.Column(db.String(100))
     DOB = db.Column(db.String(100))
     dp = db.Column(db.String(200))
-    post1 = db.Column(db.String(200))
-    post2 = db.Column(db.String(200))
-    post3 = db.Column(db.String(200))
-    post4 = db.Column(db.String(200))
-    post5 = db.Column(db.String(200))
+
+    posts = db.relationship('Posts',backref = 'user', lazy = True)
+
+class Posts(db.Model):
+    post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post = db.Column(db.String(200))
+    post_comments = db.Column(db.String(200))
+    post_caption = db.Column(db.String(200))
+    user_id = db.Column(db.Integer, db.ForeignKey('gooners.user_id'), nullable=False)
+
 
 @app.route("/post1", methods=["POST", "GET"])
 def post1():
     user_name = session.get("user_name")
     if not user_name:
         return redirect("/login")
-
     if request.method == "POST":
         file = request.files["post1"]
+        caption = request.form["caption"]
         if file:
-            # ✅ Upload to Cloudinary (in "goongram/posts" folder)
             result = cloudinary.uploader.upload(file, folder="goongram/posts")
             image_url = result['secure_url']
 
-            # ✅ Save the image URL in the database
             user = Gooners.query.filter_by(user_name=user_name).first()
-            user.post1 = image_url
+            new_post = Posts(post = image_url, post_caption = caption,user_id = user.user_id)
+            db.session.add(new_post)
             db.session.commit()
 
             return redirect("/profile")
 
-    return render_template("post1.html")
+    return render_template("post.html")
 
+@app.route("/deletepost/<int:post_id>")
+def deletepost(post_id):
+    id = Posts.query.get_or_404(post_id)
+    db.session.delete(id)
+    db.session.commit()
+    return redirect("/profile")
 
 @app.route("/dp", methods=["POST", "GET"])
 def dp():
@@ -94,11 +106,12 @@ def dp():
 
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
-    image_url = session.get("image_url")
+    user_id = session.get("user_id")
     if "user_id" not in session:
         return redirect("/login")
     user = Gooners.query.get(session["user_id"])
-    return render_template("profile.html", user=user,image_url = image_url)
+    posts = Posts.query.filter_by(user_id = user_id).order_by(Posts.post_id.desc()).all()
+    return render_template("profile.html", user=user,posts = posts)
 
 
 @app.route("/name", methods=["POST", "GET"])
@@ -202,7 +215,7 @@ def suggest():
 @app.route("/profile/<int:user_id>")
 def profile_open(user_id):
     user = Gooners.query.get_or_404(user_id)
-    return render_template("profile.html",user = user)
+    return redirect("/profile")
 
 @app.route("/delete/<int:user_id>")
 def delete(user_id):
@@ -214,10 +227,11 @@ def delete(user_id):
         return f"Failed to Delete Gooner id {user_id}"
     return redirect("/database")
 
-@app.route("/dashboard")
+@app.route("/dashboard")    
 def dashboard():
     user_name = session.get("user_name")
-    posts = Gooners.query.order_by(Gooners.dateadded.desc()).all()
+    user_id = session.get("user_id")
+    posts = Posts.query.filter_by(user_id = user_id).order_by(Posts.post_id.desc()).first()
     user = Gooners.query.filter_by(user_name = user_name).first()
     return render_template("dashboard.html", posts = posts, user = user)
 

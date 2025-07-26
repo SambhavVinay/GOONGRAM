@@ -48,12 +48,16 @@
       color: #555;
     }
 
-    .post-upload input[type="file"] {
+    .post-upload input[type="file"],
+    .post-upload input[type="text"] {
       padding: 10px;
       border: 1px solid #dbdbdb;
       border-radius: 6px;
       background-color: #fafafa;
-      cursor: pointer;
+    }
+
+    .post-upload input[type="text"]::placeholder {
+      color: #aaa;
     }
 
     .post-upload button {
@@ -74,6 +78,7 @@
 
     .preview {
       text-align: center;
+      margin-top: 30px;
     }
 
     .preview p {
@@ -95,32 +100,6 @@
       font-size: 13px;
       color: #999;
     }
-
-    .story-highlights {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin: 0 auto 30px;
-    }
-
-    .highlight {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background-color: #efefef;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid #dbdbdb;
-      cursor: pointer;
-    }
-
-    .highlight a {
-      text-decoration: none;
-      font-size: 32px;
-      font-weight: bold;
-      color: #3897f0;
-    }
   </style>
 </head>
 <body>
@@ -128,10 +107,13 @@
   <div class="navbar">Goongram</div>
 
   <div class="container">
-    
     <form class="post-upload" action="/post1" method="POST" enctype="multipart/form-data">
       <label for="post1">Select a post image</label>
       <input type="file" name="post1" id="post1" required />
+
+      <label for="caption">Write a caption</label>
+      <input type="text" name="caption" id="caption" placeholder="Say something..." maxlength="200" />
+
       <button type="submit">Share</button>
     </form>
 

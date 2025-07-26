@@ -26,7 +26,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid #dbdbdb;
       z-index: 1000;
     }
 
@@ -36,10 +36,11 @@
     }
 
     .navbar a {
-      margin-left: 10px;
+      margin-left: 20px;
       text-decoration: none;
       font-weight: 600;
       color: #0095f6;
+      font-size: 0.95rem;
     }
 
     .story-bar {
@@ -48,6 +49,7 @@
       display: flex;
       overflow-x: auto;
       border-bottom: 1px solid #dbdbdb;
+      background-color: white;
     }
 
     .story {
@@ -68,66 +70,79 @@
       font-size: 0.75rem;
       display: block;
       margin-top: 5px;
+      color: #262626;
     }
 
     .feed {
       max-width: 600px;
-      margin: 20px auto;
-      padding: 10px;
+      margin: 30px auto 60px;
+      padding: 0 15px;
     }
 
     .post {
       background-color: white;
       border: 1px solid #dbdbdb;
-      border-radius: 10px;
+      border-radius: 5px;
       margin-bottom: 30px;
+      overflow: hidden;
     }
 
     .post-header {
       display: flex;
       align-items: center;
-      padding: 10px 15px;
+      padding: 12px 15px;
     }
 
     .post-header img {
-      width: 35px;
-      height: 35px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       margin-right: 10px;
     }
 
     .post-header .username {
       font-weight: 600;
+      font-size: 0.95rem;
+      color: #262626;
     }
 
     .post img.post-image {
       width: 100%;
       height: auto;
       object-fit: cover;
+      border-top: 1px solid #dbdbdb;
+      border-bottom: 1px solid #dbdbdb;
     }
 
     .post-actions {
-      display: flex;
-      gap: 15px;
       padding: 10px 15px;
       font-size: 1.2rem;
+      color: #262626;
+      display: flex;
+      gap: 20px;
     }
 
     .post-caption {
-      padding: 0 15px 15px;
-      font-size: 0.95rem;
+      padding: 0 15px 12px;
+      font-size: 0.9rem;
+      color: #262626;
+    }
+
+    .post-caption strong {
+      margin-right: 5px;
     }
 
     .tagline {
       text-align: center;
       color: #888;
-      margin-bottom: 50px;
+      margin-bottom: 80px;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 600px) {
       .post-header img {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
       }
 
       .story img {
@@ -159,23 +174,25 @@
 
   <!-- Feed -->
   <div class="feed">
-    {% for x in posts %}
-    {% if x.post1 %}
+    {% if posts %}
     <div class="post">
       <div class="post-header">
-        <img src="{{ x.dp }}" alt="Profile Picture">
-        <div class="username">{{ x.name }}</div>
+        <img src="{{ user.dp }}" alt="Profile Picture">
+        <a href="/profile/{{user.user_id}}">
+        <div class="username">{{ user.name }}</div></a>
       </div>
-      <img src="{{ x.post1 }}" class="post-image" alt="Post">
-      <div class="post-actions">
-        ❤️ 💬 📤
-      </div>
+
+      <img src="{{ posts.post }}" class="post-image" alt="Post">
+
+      
+
       <div class="post-caption">
-        <strong>{{ x.name }}</strong> {{ x.caption }}
+        <strong>{{ user.name }}</strong>{{ posts.post_caption }}
       </div>
     </div>
+    {% else %}
+    <p style="text-align: center; color: #888;">No posts to show yet.</p>
     {% endif %}
-    {% endfor %}
   </div>
 
   <div class="tagline">Welcome to your dashboard</div>
