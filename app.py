@@ -15,10 +15,13 @@ EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 
 app = Flask(__name__)
+UPLOAD_FOLDER_POST = 'static/posts'
 UPLOAD_FOLDER = 'static/dp'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER_POST'] = UPLOAD_FOLDER_POST
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(UPLOAD_FOLDER_POST, exist_ok=True)
 db = SQLAlchemy(app)
 app.secret_key = os.getenv("SECRET_KEY", "fallback-secret")
 
@@ -35,6 +38,22 @@ class Gooners(db.Model):
     post3 = db.Column(db.String(200))
     post4 = db.Column(db.String(200))
     post5 = db.Column(db.String(200))
+
+@app.route("/post1",methods = ["POST","GET"])
+def post1():
+    image_url = None
+    user_name = session.get("user_name")
+    if request.method == "POST":
+        file = request.files["post1"]
+        if file:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER_POST'], file.filename)
+            file.save(filepath)
+            image_url = "/" + filepath.replace("\\", "/")
+            user = Gooners.query.filter_by(user_name = user_name).first()
+            user.post1 = image_url
+            db.session.commit()
+            return redirect("/profile")
+    return render_template("post1.html")
 
 @app.route("/dp",methods = ["POST","GET"])
 def dp():
