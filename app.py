@@ -65,6 +65,7 @@ def post1():
 
             user = Gooners.query.filter_by(user_name=user_name).first()
             new_post = Posts(post = image_url, post_caption = caption,user_id = user.user_id)
+            
             db.session.add(new_post)
             db.session.commit()
 
@@ -215,7 +216,8 @@ def suggest():
 @app.route("/profile/<int:user_id>")
 def profile_open(user_id):
     user = Gooners.query.get_or_404(user_id)
-    return render_template("profile.html",user = user)
+    images = Posts.query.filter_by(user_id = user_id).order_by(Posts.post_id.desc()).all()
+    return render_template("profile.html",user = user,images = images)
 
 @app.route("/delete/<int:user_id>")
 def delete(user_id):
