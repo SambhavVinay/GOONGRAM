@@ -75,12 +75,21 @@
         }
 
         .profile-pic {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin: 0 auto 15px auto;
-        }
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin: 0 auto 15px auto;
+    overflow: hidden;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 
         .name {
             font-weight: bold;
@@ -138,8 +147,9 @@
         {% for user in search_name %}
             <div class="profile-card">
                 <div class="profile-pic">
-                    
-                </div>
+    <img src="{{user.dp}}">
+</div>
+
                 <div class="name">{{ user.name }}</div>
                 <div class="username">@{{ user.user_name }}</div>
                 <a href="/profile/{{ user.user_id }}" class="view-btn">View Profile</a>

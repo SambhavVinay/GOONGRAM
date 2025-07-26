@@ -30,7 +30,11 @@ class Gooners(db.Model):
     name = db.Column(db.String(100))
     DOB = db.Column(db.String(100))
     dp = db.Column(db.String(200))
-
+    post1 = db.Column(db.String(200))
+    post2 = db.Column(db.String(200))
+    post3 = db.Column(db.String(200))
+    post4 = db.Column(db.String(200))
+    post5 = db.Column(db.String(200))
 
 @app.route("/dp",methods = ["POST","GET"])
 def dp():
@@ -81,7 +85,7 @@ def DOB():
         if user:
             user.DOB = dob  
             db.session.commit()
-            return redirect("/dashboard")
+            return redirect("/gooners")
         else:
             return "Failed to add DOB"
     return render_template("DOB.html")
@@ -143,6 +147,7 @@ def register():
 
 @app.route("/search",methods = ["POST","GET"])
 def search():
+    user_name = session.get("user_name")
     if request.method == "POST":
        name = request.form["name"]
        search_name = Gooners.query.filter(Gooners.name.ilike(f"%{name}%")).all()
@@ -180,7 +185,6 @@ def gooners():
     present = Gooners.query.order_by(Gooners.dateadded.desc()).all()
     return render_template("present.html", present = present)
 
- 
 @app.route("/database")
 def database():
     new_gooner = Gooners.query.order_by(Gooners.dateadded.desc()).all()
