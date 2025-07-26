@@ -5,11 +5,16 @@ import smtplib
 from dotenv import load_dotenv
 import os
 from flask import jsonify
-
-
+import cloudinary
+import cloudinary.uploader
 
 load_dotenv()
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("CLOUD_API_KEY"),
+    api_secret=os.getenv("CLOUD_API_SECRET")
+)
 
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
@@ -39,38 +44,52 @@ class Gooners(db.Model):
     post4 = db.Column(db.String(200))
     post5 = db.Column(db.String(200))
 
-@app.route("/post1",methods = ["POST","GET"])
+@app.route("/post1", methods=["POST", "GET"])
 def post1():
-    image_url = None
     user_name = session.get("user_name")
+    if not user_name:
+        return redirect("/login")
+
     if request.method == "POST":
         file = request.files["post1"]
         if file:
-            filepath = os.path.join(app.config['UPLOAD_FOLDER_POST'], file.filename)
-            file.save(filepath)
-            image_url = "/" + filepath.replace("\\", "/")
-            user = Gooners.query.filter_by(user_name = user_name).first()
+            # ✅ Upload to Cloudinary (in "goongram/posts" folder)
+            result = cloudinary.uploader.upload(file, folder="goongram/posts")
+            image_url = result['secure_url']
+
+            # ✅ Save the image URL in the database
+            user = Gooners.query.filter_by(user_name=user_name).first()
             user.post1 = image_url
             db.session.commit()
+
             return redirect("/profile")
+
     return render_template("post1.html")
 
-@app.route("/dp",methods = ["POST","GET"])
+
+@app.route("/dp", methods=["POST", "GET"])
 def dp():
-    image_url = None
     user_name = session.get("user_name")
+    if not user_name:
+        return redirect("/login")
+
     if request.method == "POST":
         file = request.files["img"]
         if file:
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filepath)
-            image_url = "/" + filepath.replace("\\", "/")
-            gooner = Gooners.query.filter_by(user_name = user_name).first()
+            # ✅ Upload to Cloudinary instead of local folder
+            result = cloudinary.uploader.upload(file, folder="goongram/dp")
+            image_url = result['secure_url']  # permanent URL
+
+            # ✅ Save URL in DB
+            gooner = Gooners.query.filter_by(user_name=user_name).first()
             gooner.dp = image_url
             session["image_url"] = image_url
             db.session.commit()
+
             return redirect("/profile")
+
     return render_template("dp.html")
+
 
 
 @app.route("/profile", methods=["POST", "GET"])
