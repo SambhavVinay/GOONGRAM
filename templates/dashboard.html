@@ -150,6 +150,38 @@
         height: 50px;
       }
     }
+    .caption {
+  font-size: 1rem;
+  color: #262626;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.caption b {
+  font-weight: 600;
+  margin-right: 6px;
+}
+.comment-btn {
+  display: inline-block;
+  background-color: #4bd2ff; /* Light blue */
+  color: #ffffff;
+  padding: 8px 16px;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px; /* Small border-radius for rectangular feel */
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.comment-btn:hover {
+  background-color: #9ccbe1; /* Slightly darker on hover */
+  cursor: pointer;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -188,11 +220,15 @@
         <img src="{{ post.post }}" class="post-image" alt="Post">
 
         <div class="post-caption">
-  <strong><a href="/comments/{{ post.post_id }}">Comment</a></strong>
+          <div class="caption"><b>{{post_user.name}}</b> : {{post.post_caption}}</div><br>
+  <a href="/comments/{{ post.post_id }}" class="comment-btn">Comment</a>
+
+
 </div>
 
 <!-- Comment section under each post -->
 <div class="post-caption" style="margin-top: 10px;">
+  
   {% for comment in comments %}
     {% if comment.post_id == post.post_id %}
       <div style="margin-top: 5px;">
