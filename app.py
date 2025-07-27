@@ -233,8 +233,8 @@ def delete(user_id):
 def dashboard():
     user_name = session.get("user_name")
     user_id = session.get("user_id")
-    posts = Posts.query.filter_by(user_id = user_id).order_by(Posts.post_id.desc()).first()
-    user = Gooners.query.filter_by(user_name = user_name).first()
+    posts = Posts.query.order_by(Posts.post_id.desc()).all()
+    user = Gooners.query.order_by(Gooners.dateadded).all()
     return render_template("dashboard.html", posts = posts, user = user)
 
 @app.route("/gooners")
@@ -250,4 +250,4 @@ def database():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    #app.run(debug=True)

@@ -173,27 +173,30 @@
   </div>
 
   <!-- Feed -->
-  <div class="feed">
-    {% if posts %}
-    <div class="post">
-      <div class="post-header">
-        <img src="{{ user.dp }}" alt="Profile Picture">
-        <a href="/profile/{{user.user_id}}">
-        <div class="username">{{ user.name }}</div></a>
+<div class="feed">
+  {% if posts %}
+    {% for post in posts %}
+      {% set post_user = user | selectattr('user_id', 'equalto', post.user_id) | list | first %}
+      <div class="post">
+        <div class="post-header">
+          <img src="{{ post_user.dp }}" alt="Profile Picture">
+          <a href="/profile/{{ post_user.user_id }}">
+            <div class="username">{{ post_user.name }}</div>
+          </a>
+        </div>
+
+        <img src="{{ post.post }}" class="post-image" alt="Post">
+
+        <div class="post-caption">
+          <strong>{{ post_user.name }}</strong> {{ post.post_caption }}
+        </div>
       </div>
-
-      <img src="{{ posts.post }}" class="post-image" alt="Post">
-
-      
-
-      <div class="post-caption">
-        <strong>{{ user.name }}</strong>{{ posts.post_caption }}
-      </div>
-    </div>
-    {% else %}
+    {% endfor %}
+  {% else %}
     <p style="text-align: center; color: #888;">No posts to show yet.</p>
-    {% endif %}
-  </div>
+  {% endif %}
+</div>
+
 
   <div class="tagline">Welcome to your dashboard</div>
 
