@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LooneyGram Dashboard</title>
+  <title>NoirFeed Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -187,7 +187,7 @@
 <body>
 
   <div class="navbar">
-    <h1>LooneyGram</h1>
+    <h1>NoirFeed</h1>
     <div>
       <a href="/profile">Profile</a>
       <a href="/search">Search</a>
@@ -232,7 +232,7 @@
   {% for comment in comments %}
     {% if comment.post_id == post.post_id %}
       <div style="margin-top: 5px;">
-        <strong>{{ comment.user.user_name }}</strong>: {{ comment.comment_text }}
+        <strong>{{ comment.user.name }}</strong>: {{ comment.comment_text }}
       </div>
     {% endif %}
   {% endfor %}

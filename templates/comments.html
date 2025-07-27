@@ -93,7 +93,7 @@
   <!-- Comment List -->
   {% for c in comment %}
     <div class="comment-box">
-      <strong>{{ c.user.user_name }}</strong>
+      <strong>{{ c.user.name }}</strong>
       <p>{{ c.comment_text }}</p>
       <div class="timestamp">{{ c.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
     </div>

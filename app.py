@@ -49,6 +49,10 @@ class Posts(db.Model):
     post_caption = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('gooners.user_id'), nullable=False)
 
+    # In your Post model
+    comments = db.relationship("Comments", backref="post", cascade="all, delete-orphan")
+
+
 class Comments(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     comment_text = db.Column(db.String(300), nullable=False)
@@ -60,7 +64,7 @@ class Comments(db.Model):
 
     
     user = db.relationship('Gooners', backref='comments', lazy=True)
-    post = db.relationship('Posts', backref='comments', lazy=True)
+    
 
 @app.route("/comments/<int:post_id>", methods=["POST", "GET"])
 def comments(post_id):
