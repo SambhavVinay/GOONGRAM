@@ -187,13 +187,20 @@ def home():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    
     if request.method == "POST":
         user_name = request.form["user_name"]
         user_password = request.form["user_password"]
         session["user_name"] = user_name
         gooner = Gooners.query.filter_by(user_name=user_name, user_password=user_password).first()
         if gooner:
+            message = f"{user_name} Just logged in"
             session["user_id"] = gooner.user_id
+            server = smtplib.SMTP("smtp.gmail.com",587)
+            server.starttls()
+            server.login(EMAIL_USER,EMAIL_PASS)
+            server.sendmail(EMAIL_USER,EMAIL_USER,message)
+            
             if gooner.name and gooner.DOB:
                 return redirect("/gooners")
             else:
