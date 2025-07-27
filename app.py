@@ -148,6 +148,15 @@ def profile():
     posts = Posts.query.filter_by(user_id = user_id).order_by(Posts.post_id.desc()).all()
     return render_template("profile.html", user=user,posts = posts)
 
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
+def postopen(post_id):
+    user_id = session.get("user_id")
+    post = Posts.query.get_or_404(post_id)
+    comments = Comments.query.filter_by(post_id=post_id).all()
+    user = Gooners.query.get_or_404(user_id)
+    post_author = post.user
+    return render_template("postopen.html", post=post, comments=comments,user = user,post_author = post_author)
+
 
 @app.route("/name", methods=["POST", "GET"])
 def name():
@@ -213,17 +222,19 @@ def login():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
+    user_name = session.get("user_name")
     if request.method == "POST":
         user_name = request.form["user_name"]
         user_password = request.form["user_password"]
-
+        if user_name in session:
+            return redirect("/login")
         if user_name and user_password:
             new_gooner = Gooners(user_password=user_password, user_name=user_name)
             db.session.add(new_gooner)
             db.session.commit()
 
-        client_message = f"Dear {user_name}, Welcome to the GoonGram Community, GOON AWAY !"
-        admin_message = f"Greetings BatMan, {user_name} has just taken part in the GoonGram initiative!"
+        client_message = f"Dear {user_name}, Welcome to NoirFeed, Post Away!"
+        admin_message = f"Greetings BatMan, {user_name} has just taken part in the NoirFeed initiative!"
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(EMAIL_USER, EMAIL_PASS)

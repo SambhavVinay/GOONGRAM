@@ -220,7 +220,10 @@
         <img src="{{ post.post }}" class="post-image" alt="Post">
 
         <div class="post-caption">
-          <div class="caption"><b>{{post_user.name}}</b> : {{post.post_caption}}</div><br>
+          {% if post.post_caption %}
+          <div class="caption"><b>{{post_user.name}}</b> : {{post.post_caption}}</div>
+          {% endif %}
+          <br>
   <a href="/comments/{{ post.post_id }}" class="comment-btn">Comment</a>
 
 

@@ -226,7 +226,7 @@
 
     <div class="posts-grid">
       {% for post in posts %}
-        <div class="post-item">
+      <a href="/post/{{post.post_id}}"><div class="post-item">
           <img src="{{ post.post }}" alt="Post image">
           <div class="post-caption">{{ post.post_caption }}</div>
           <a href="/deletepost/{{ post.post_id }}"
@@ -234,16 +234,19 @@
              onclick="return confirm('Are you sure you want to delete this post?');">
             Delete
           </a>
-        </div>
+        </div></a>
+        
       {% endfor %}
     </div>
     {% if images %}
 <div class="post-grid">
   {% for post in images %}
-    <div class="post-item">
+    
+      <a href="/post/{{post.post_id}}"><div class="post-item">
       <img src="{{ post.post }}" alt="Post image" />
-      <span>{{post.post_caption}}</span>
-    </div>
+      <span>{{post.post_caption}}</span></div></a>
+    
+
   {% endfor %}
 </div>
 
