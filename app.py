@@ -46,10 +46,40 @@ class Gooners(db.Model):
 class Posts(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post = db.Column(db.String(200))
-    post_comments = db.Column(db.String(200))
     post_caption = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('gooners.user_id'), nullable=False)
 
+class Comments(db.Model):
+    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    comment_text = db.Column(db.String(300), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('gooners.user_id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), nullable=False)
+
+    
+    user = db.relationship('Gooners', backref='comments', lazy=True)
+    post = db.relationship('Posts', backref='comments', lazy=True)
+
+@app.route("/comments/<int:post_id>", methods=["POST", "GET"])
+def comments(post_id):
+    user_id = session.get("user_id")
+    if request.method == "POST":
+        comment = request.form["comment"]
+        new_comment = Comments(
+            comment_text=comment,
+            user_id=user_id,
+            post_id=post_id
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+    comment = Comments.query.filter_by(post_id=post_id).order_by(Comments.timestamp.desc()).all()    
+    return render_template("comments.html", comment=comment, post_id = post_id)
+
+
+
+        
 
 @app.route("/post1", methods=["POST", "GET"])
 def post1():
@@ -62,7 +92,7 @@ def post1():
         if file:
             result = cloudinary.uploader.upload(file, folder="goongram/posts")
             image_url = result['secure_url']
-
+            
             user = Gooners.query.filter_by(user_name=user_name).first()
             new_post = Posts(post = image_url, post_caption = caption,user_id = user.user_id)
             
@@ -160,11 +190,6 @@ def login():
         gooner = Gooners.query.filter_by(user_name=user_name, user_password=user_password).first()
         if gooner:
             session["user_id"] = gooner.user_id
-            client_message = f"Congrats {user_name}, Successful LOGIN onto GoonGram!"
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(EMAIL_USER, EMAIL_PASS)
-            server.sendmail(EMAIL_USER, user_name, client_message)
             if gooner.name and gooner.DOB:
                 return redirect("/gooners")
             else:
@@ -235,7 +260,8 @@ def dashboard():
     user_id = session.get("user_id")
     posts = Posts.query.order_by(Posts.post_id.desc()).all()
     user = Gooners.query.order_by(Gooners.dateadded).all()
-    return render_template("dashboard.html", posts = posts, user = user)
+    comments = Comments.query.order_by(Comments.comment_id.desc()).all()
+    return render_template("dashboard.html", posts = posts, user = user,comments = comments)
 
 @app.route("/gooners")
 def gooners():

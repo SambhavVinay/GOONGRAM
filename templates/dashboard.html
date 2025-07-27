@@ -188,8 +188,21 @@
         <img src="{{ post.post }}" class="post-image" alt="Post">
 
         <div class="post-caption">
-          <strong>{{ post_user.name }}</strong> {{ post.post_caption }}
-        </div>
+  <strong><a href="/comments/{{ post.post_id }}">Comment</a></strong>
+</div>
+
+<!-- Comment section under each post -->
+<div class="post-caption" style="margin-top: 10px;">
+  {% for comment in comments %}
+    {% if comment.post_id == post.post_id %}
+      <div style="margin-top: 5px;">
+        <strong>{{ comment.user.user_name }}</strong>: {{ comment.comment_text }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
       </div>
     {% endfor %}
   {% else %}
