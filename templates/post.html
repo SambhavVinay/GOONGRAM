@@ -15,26 +15,27 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #fafafa;
       color: #262626;
+      padding: 10px;
     }
 
     .navbar {
       background-color: #fff;
       border-bottom: 1px solid #dbdbdb;
       padding: 15px 20px;
-      display: flex;
-      justify-content: center;
+      text-align: center;
       font-weight: bold;
       font-size: 20px;
       color: #262626;
     }
 
     .container {
+      width: 100%;
       max-width: 550px;
       margin: 40px auto;
       background-color: #fff;
       border: 1px solid #dbdbdb;
       border-radius: 12px;
-      padding: 30px;
+      padding: 25px 20px;
     }
 
     .post-upload {
@@ -50,10 +51,11 @@
 
     .post-upload input[type="file"],
     .post-upload input[type="text"] {
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #dbdbdb;
       border-radius: 6px;
       background-color: #fafafa;
+      font-size: 15px;
     }
 
     .post-upload input[type="text"]::placeholder {
@@ -88,10 +90,11 @@
     }
 
     .preview img {
-      max-width: 100%;
+      width: 100%;
       max-height: 400px;
       border-radius: 8px;
       border: 1px solid #dbdbdb;
+      object-fit: cover;
     }
 
     footer {
@@ -100,11 +103,32 @@
       font-size: 13px;
       color: #999;
     }
+
+    @media (max-width: 600px) {
+      .navbar {
+        font-size: 18px;
+        padding: 12px;
+      }
+
+      .container {
+        margin: 20px auto;
+        padding: 20px 15px;
+      }
+
+      .post-upload button {
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .preview img {
+        max-height: 300px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="navbar">Goongram</div>
+  <div class="navbar">Add Post</div>
 
   <div class="container">
     <form class="post-upload" action="/post1" method="POST" enctype="multipart/form-data">
@@ -125,7 +149,7 @@
     {% endif %}
   </div>
 
-  <footer>&copy; 2025 Goongram</footer>
+  <footer>&copy; 2025 NoirFeed</footer>
 
 </body>
 </html>

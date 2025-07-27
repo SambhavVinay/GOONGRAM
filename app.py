@@ -71,6 +71,7 @@ def comments(post_id):
     user_id = session.get("user_id")
     if request.method == "POST":
         comment = request.form["comment"]
+        
         new_comment = Comments(
             comment_text=comment,
             user_id=user_id,
@@ -82,8 +83,17 @@ def comments(post_id):
     return render_template("comments.html", comment=comment, post_id = post_id)
 
 
-
-        
+@app.route("/deletecomment/<int:comment_id>", methods=["POST", "GET"])
+def commentdelete(comment_id):
+    user_id = session.get("user_id")
+    delete_comment = Comments.query.get_or_404(comment_id)
+    if user_id == delete_comment.user_id:
+        post_id = delete_comment.post_id
+        db.session.delete(delete_comment)
+        db.session.commit()
+        return redirect(f"/post/{post_id}")
+    else:
+        return redirect(f"/post/{delete_comment.post_id}")
 
 @app.route("/post1", methods=["POST", "GET"])
 def post1():
@@ -268,6 +278,7 @@ def profile_open(user_id):
 
 @app.route("/delete/<int:user_id>")
 def delete(user_id):
+   
     delete_gooner = Gooners.query.get_or_404(user_id)
     try:
         db.session.delete(delete_gooner)
@@ -298,4 +309,4 @@ def database():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    #app.run(debug=True)
+    app.run(debug=True)

@@ -173,13 +173,14 @@
       <div class="comment-box">
         <strong>{{ c.user.name }}</strong>
         <p>{{ c.comment_text }}</p>
+        <p><a href="/deletecomment/{{c.comment_id}}">Delete Comment</a></p>
         <div class="timestamp">{{ c.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
       </div>
     {% else %}
       <p style="text-align:center; color:#777;">No comments yet. Be the first!</p>
     {% endfor %}
 
-    <a href="/post/{{post_id}}" class="back-link">← Back to Post</a>
+    <a href="/post/{{post_id}}" class="back-link">Back to Post</a>
   </div>
 
 </body>
