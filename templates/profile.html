@@ -215,17 +215,7 @@
           <button class="btn-soft">Portfolio</button>
         </div>
         
-{% if images %}
-<div class="post-grid">
-  {% for post in images %}
-    <div class="post-item">
-      <img src="{{ post.post }}" alt="Post image" />
-      <span>{{post.post_caption}}</span>
-    </div>
-  {% endfor %}
-</div>
 
-{% endif %}
       </div>
     </div>
 
@@ -247,6 +237,17 @@
         </div>
       {% endfor %}
     </div>
+    {% if images %}
+<div class="post-grid">
+  {% for post in images %}
+    <div class="post-item">
+      <img src="{{ post.post }}" alt="Post image" />
+      <span>{{post.post_caption}}</span>
+    </div>
+  {% endfor %}
+</div>
+
+{% endif %}
   </div>
 
   <a href="/dashboard" class="dashboard-btn">Dashboard</a>
