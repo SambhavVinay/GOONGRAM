@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login • Gooners</title>
+  <title>Login • LooneyGram</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
@@ -149,19 +149,22 @@
       }
     }
     .footer-note {
-            position: fixed;
-            bottom: 12px;
-            right: 12px;
-            font-size: 12px;
-            color: #888;
-            opacity: 0.7;
-        }
+  position: fixed;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
   </style>
 </head>
 <body>
 
   <div class="login-container">
-    <h1>Gooners</h1>
+    <h1>LooneyGram</h1>
     <form action="/login" method="POST">
       <input type="text" name="user_name" placeholder="Email" autocomplete="off" required />
       <input type="password" name="user_password" placeholder="Password" autocomplete="new-password" required />
@@ -175,7 +178,7 @@
       <a href="/register">Sign up</a>
     </div>
   </div>
-  <div class="footer-note">© Goongram 2025</div>
+  <div class="footer-note">© LooneyGram 2025</div>
 
 
 </body>
